@@ -1,25 +1,69 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿
 using System;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // Variables définies dans le debug (valeurs d'exemple)
-        double salaireAnnuelBrut = 30000;
-        double tauxImposition = 0.25; // 25%
+        // Demande le salaire brut annuel
+        Console.Write("Entrez votre salaire brut annuel (€) : ");
+        string saisieSalaire = Console.ReadLine();
 
-        // Afficher le salaire brut annuel
-        Console.WriteLine($"Le salaire brut annuel est : {salaireAnnuelBrut} €");
+        // Vérification : est-ce que la saisie contient uniquement des chiffres ?
+        if (EstUnNombre(saisieSalaire))
+        {
+            Console.WriteLine($"Le salaire brut annuel est : {saisieSalaire} €");
 
-        // Calcul du salaire net annuel
-        double salaireAnnuelNet = salaireAnnuelBrut * (1 - tauxImposition);
+            // Demande le taux d'imposition
+            Console.Write("Entrez votre taux d'imposition (en %) : ");
+            string saisieTaux = Console.ReadLine();
 
-        // Calcul du salaire net mensuel
-        double salaireNetMensuel = salaireAnnuelNet / 12;
+            // Vérification : est-ce que la saisie contient uniquement des chiffres ?
+            if (EstUnNombre(saisieTaux))
+            {
+                // Si les deux sont des nombres, affiche le récap
+                Console.WriteLine($"\nLe taux d'imposition est : {saisieTaux}%");
+                Console.WriteLine($"Votre salaire brut annuel est : {saisieSalaire} €");
 
-        // Afficher le salaire net mensuel
-        Console.WriteLine($"Le salaire net mensuel est : {salaireNetMensuel:N2} €");
+                // Exemple : une case pour réagir à un taux particulier
+                switch (saisieTaux)
+                {
+                    case "0":
+                        Console.WriteLine("Pas d'impôt ? Chanceux !");
+                        break;
+
+                    case "100":
+                        Console.WriteLine("Tout est pris ! Ça fait mal...");
+                        break;
+
+                    default:
+                        Console.WriteLine("Impôt normal.");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ce n'est pas un nombre valide !");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Ce n'est pas un nombre valide !");
+        }
+    }
+
+    // vérifier chaque string = chiffre
+    static bool EstUnNombre(string saisie)
+    {
+        foreach (char c in saisie)
+        {
+            if (!char.IsDigit(c)) // Si ce n'est pas un chiffre
+            {
+                return false; // => Ce n'est PAS un nombre
+            }
+        }
+
+        return true; // Si on a vérifié tous les caractères et que ce sont des chiffres, alors c'est un nombre
     }
 }
+
